@@ -19,28 +19,24 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
   try {
     let newItem = new Item(req.body.name, req.body.price);
-    return res.status(201).json({ item: newItem });
-  } catch (e) {
-    return next(e);
+    return res.json({ item: newItem });
+  } catch (err) {
+    return next(err);
   }
 });
 
 //Get item by its name from shopping list
-router.get("/:query", (req, res) => {
+router.get("/:name", (req, res, next) => {
   try {
-    if (req.params.name) {
-      let foundItem = Item.findByName(req.params.name);
-    } else {
-      let foundItem = Item.findByPrice(req.params.price);
-    }
+    let foundItem = Item.find(req.params.name);
     return res.json({ item: foundItem });
-  } catch (e) {
-    return next(e);
+  } catch (err) {
+    return next(err);
   }
 });
 
-// Modify single item by or price from shopping list
-router.patch("/:query", (req, res) => {
+// Modify single item by name from shopping list
+router.patch("/:name", (req, res, next) => {
   try {
     let foundItem = Item.update(req.params.name, req.body);
     return res.json({ item: foundItem });

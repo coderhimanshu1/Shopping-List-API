@@ -17,7 +17,7 @@ class Item {
   /** Update found item with matching name to data. */
 
   static update(name, data) {
-    let foundItem = Item.findByName(name);
+    let foundItem = Item.find(name);
     if (foundItem === undefined) {
       throw { message: "Item Not Found", status: 404 };
     }
@@ -27,27 +27,15 @@ class Item {
     return foundItem;
   }
 
-  /** Find item by name & return it with matching name. */
+  /** Find item and return with matching name. */
 
-  static findByName(name) {
+  static find(name) {
     const foundItem = items.find((item) => item.name === name);
     if (foundItem === undefined) {
       throw new ExpressError("Item Not Found", 404);
     }
     return foundItem;
   }
-
-  /** Find item by name & return it with matching name. */
-
-  static findByPrice(name) {
-    const foundItem = items.find((item) => item.price === price);
-    if (foundItem === undefined) {
-      throw new ExpressError("Item Not Found", 404);
-    }
-    return foundItem;
-  }
-
-  /** Remove item with matching id. */
 
   static remove(name) {
     let foundIdx = items.findIndex((item) => item.name === name);
